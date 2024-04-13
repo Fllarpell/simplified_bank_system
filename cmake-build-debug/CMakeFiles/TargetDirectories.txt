@@ -1,0 +1,3 @@
+C:/Users/dimas/CLionProjects/simplified_bank_system/cmake-build-debug/CMakeFiles/simplified_bank_system.dir
+C:/Users/dimas/CLionProjects/simplified_bank_system/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/dimas/CLionProjects/simplified_bank_system/cmake-build-debug/CMakeFiles/rebuild_cache.dir
