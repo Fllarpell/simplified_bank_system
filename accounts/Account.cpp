@@ -9,6 +9,8 @@ Account::Account::Account(const std::string &accountType, const std::string &acc
     this->history["Deposit"]        = 0.0               ;
     this->history["Withdrawal"]     = 0.0               ;
     this->history["Transfer"]       = 0.0               ;
+
+    this->current = new ACTIVATE();
 }
 
 void Account::Account::withdraw(float withdrawalAmount) {
@@ -47,7 +49,15 @@ std::string Account::Account::getAccountType() {
 }
 
 float Account::Account::getTransactionFeePercentage() {
-    return 0;
+    return 0.0;
+}
+
+void Account::Account::activate() {
+    current->activate(this);
+}
+
+void Account::Account::deactivate() {
+    current->deactivate(this);
 }
 
 
@@ -89,6 +99,18 @@ std::string Account::DecoratorAccount::getAccountType() {
 
 float Account::DecoratorAccount::getTransactionFeePercentage() {
     return acc->getTransactionFeePercentage();
+}
+
+void Account::DecoratorAccount::activate() {
+    return acc->activate();
+}
+
+void Account::DecoratorAccount::deactivate() {
+    return acc->deactivate();
+}
+
+void Account::DecoratorAccount::setCurrent(StateActivation *state) {
+    return acc->setCurrent(state);
 }
 
 
@@ -136,6 +158,18 @@ float Account::SavingAccount::getTransactionFeePercentage() {
     return DecoratorAccount::getTransactionFeePercentage() + this->transactionFeePercentage;
 }
 
+void Account::SavingAccount::activate() {
+    DecoratorAccount::activate();
+}
+
+void Account::SavingAccount::deactivate() {
+    DecoratorAccount::deactivate();
+}
+
+void Account::SavingAccount::setCurrent(StateActivation *state) {
+    DecoratorAccount::setCurrent(state);
+}
+
 
 void Account::CheckingAccount::withdraw(float withdrawalAmount) {
     DecoratorAccount::withdraw(withdrawalAmount);
@@ -180,6 +214,18 @@ float Account::CheckingAccount::getTransactionFeePercentage() {
     return DecoratorAccount::getTransactionFeePercentage() + this->transactionFeePercentage;
 }
 
+void Account::CheckingAccount::activate() {
+    DecoratorAccount::activate();
+}
+
+void Account::CheckingAccount::deactivate() {
+    DecoratorAccount::deactivate();
+}
+
+void Account::CheckingAccount::setCurrent(StateActivation *state) {
+    DecoratorAccount::setCurrent(state);
+}
+
 
 void Account::BusinessAccount::withdraw(float withdrawalAmount) {
     DecoratorAccount::withdraw(withdrawalAmount);
@@ -222,4 +268,37 @@ std::string Account::BusinessAccount::getAccountType() {
 
 float Account::BusinessAccount::getTransactionFeePercentage() {
     return DecoratorAccount::getTransactionFeePercentage() + this->transactionFeePercentage;
+}
+
+void Account::BusinessAccount::activate() {
+    DecoratorAccount::activate();
+}
+
+void Account::BusinessAccount::deactivate() {
+    DecoratorAccount::deactivate();
+}
+
+void Account::BusinessAccount::setCurrent(StateActivation *state) {
+    DecoratorAccount::setCurrent(state);
+}
+
+
+void Account::StateActivation::activate(Account::AccountFunctions *account) {
+    ErrorHandling::ErrorHandling::ActivateAnActivatedAccountError(account->getAccountName());
+}
+
+void Account::StateActivation::deactivate(Account::AccountFunctions *account) {
+    ErrorHandling::ErrorHandling::DeactivateADeactivatedAccountError(account->getAccountName());
+}
+
+
+void Account::ACTIVATE::deactivate(AccountFunctions *account) {
+    account->setCurrent(new DEACTIVATE());
+    delete this;
+}
+
+
+void Account::DEACTIVATE::activate(AccountFunctions *account) {
+    account->setCurrent(new ACTIVATE());
+    delete this;
 }
