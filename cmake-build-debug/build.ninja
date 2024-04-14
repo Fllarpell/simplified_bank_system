@@ -49,29 +49,41 @@ cmake_ninja_workdir = C$:/Users/dimas/CLionProjects/simplified_bank_system/cmake
 
 build cmake_object_order_depends_target_simplified_bank_system: phony || CMakeFiles/simplified_bank_system.dir
 
-build CMakeFiles/simplified_bank_system.dir/main.cpp.obj: CXX_COMPILER__simplified_bank_system_unscanned_Debug C$:/Users/dimas/CLionProjects/simplified_bank_system/main.cpp || cmake_object_order_depends_target_simplified_bank_system
-  DEP_FILE = CMakeFiles\simplified_bank_system.dir\main.cpp.obj.d
+build CMakeFiles/simplified_bank_system.dir/main/main.cpp.obj: CXX_COMPILER__simplified_bank_system_unscanned_Debug C$:/Users/dimas/CLionProjects/simplified_bank_system/main/main.cpp || cmake_object_order_depends_target_simplified_bank_system
+  DEP_FILE = CMakeFiles\simplified_bank_system.dir\main\main.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\simplified_bank_system.dir
-  OBJECT_FILE_DIR = CMakeFiles\simplified_bank_system.dir
+  OBJECT_FILE_DIR = CMakeFiles\simplified_bank_system.dir\main
 
-build CMakeFiles/simplified_bank_system.dir/Account.cpp.obj: CXX_COMPILER__simplified_bank_system_unscanned_Debug C$:/Users/dimas/CLionProjects/simplified_bank_system/Account.cpp || cmake_object_order_depends_target_simplified_bank_system
-  DEP_FILE = CMakeFiles\simplified_bank_system.dir\Account.cpp.obj.d
+build CMakeFiles/simplified_bank_system.dir/accounts/Account.cpp.obj: CXX_COMPILER__simplified_bank_system_unscanned_Debug C$:/Users/dimas/CLionProjects/simplified_bank_system/accounts/Account.cpp || cmake_object_order_depends_target_simplified_bank_system
+  DEP_FILE = CMakeFiles\simplified_bank_system.dir\accounts\Account.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\simplified_bank_system.dir
-  OBJECT_FILE_DIR = CMakeFiles\simplified_bank_system.dir
+  OBJECT_FILE_DIR = CMakeFiles\simplified_bank_system.dir\accounts
 
-build CMakeFiles/simplified_bank_system.dir/BankingSystem.cpp.obj: CXX_COMPILER__simplified_bank_system_unscanned_Debug C$:/Users/dimas/CLionProjects/simplified_bank_system/BankingSystem.cpp || cmake_object_order_depends_target_simplified_bank_system
-  DEP_FILE = CMakeFiles\simplified_bank_system.dir\BankingSystem.cpp.obj.d
+build CMakeFiles/simplified_bank_system.dir/banking_system/BankingSystem.cpp.obj: CXX_COMPILER__simplified_bank_system_unscanned_Debug C$:/Users/dimas/CLionProjects/simplified_bank_system/banking_system/BankingSystem.cpp || cmake_object_order_depends_target_simplified_bank_system
+  DEP_FILE = CMakeFiles\simplified_bank_system.dir\banking_system\BankingSystem.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\simplified_bank_system.dir
-  OBJECT_FILE_DIR = CMakeFiles\simplified_bank_system.dir
+  OBJECT_FILE_DIR = CMakeFiles\simplified_bank_system.dir\banking_system
 
-build CMakeFiles/simplified_bank_system.dir/ErrorHandling.cpp.obj: CXX_COMPILER__simplified_bank_system_unscanned_Debug C$:/Users/dimas/CLionProjects/simplified_bank_system/ErrorHandling.cpp || cmake_object_order_depends_target_simplified_bank_system
-  DEP_FILE = CMakeFiles\simplified_bank_system.dir\ErrorHandling.cpp.obj.d
+build CMakeFiles/simplified_bank_system.dir/messages/errorMessages/ErrorHandling.cpp.obj: CXX_COMPILER__simplified_bank_system_unscanned_Debug C$:/Users/dimas/CLionProjects/simplified_bank_system/messages/errorMessages/ErrorHandling.cpp || cmake_object_order_depends_target_simplified_bank_system
+  DEP_FILE = CMakeFiles\simplified_bank_system.dir\messages\errorMessages\ErrorHandling.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\simplified_bank_system.dir
-  OBJECT_FILE_DIR = CMakeFiles\simplified_bank_system.dir
+  OBJECT_FILE_DIR = CMakeFiles\simplified_bank_system.dir\messages\errorMessages
+
+build CMakeFiles/simplified_bank_system.dir/main/operations/OperationsHandling.cpp.obj: CXX_COMPILER__simplified_bank_system_unscanned_Debug C$:/Users/dimas/CLionProjects/simplified_bank_system/main/operations/OperationsHandling.cpp || cmake_object_order_depends_target_simplified_bank_system
+  DEP_FILE = CMakeFiles\simplified_bank_system.dir\main\operations\OperationsHandling.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\simplified_bank_system.dir
+  OBJECT_FILE_DIR = CMakeFiles\simplified_bank_system.dir\main\operations
+
+build CMakeFiles/simplified_bank_system.dir/messages/successfulMessages/SuccessfulMessages.cpp.obj: CXX_COMPILER__simplified_bank_system_unscanned_Debug C$:/Users/dimas/CLionProjects/simplified_bank_system/messages/successfulMessages/SuccessfulMessages.cpp || cmake_object_order_depends_target_simplified_bank_system
+  DEP_FILE = CMakeFiles\simplified_bank_system.dir\messages\successfulMessages\SuccessfulMessages.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\simplified_bank_system.dir
+  OBJECT_FILE_DIR = CMakeFiles\simplified_bank_system.dir\messages\successfulMessages
 
 
 # =============================================================================
@@ -81,7 +93,7 @@ build CMakeFiles/simplified_bank_system.dir/ErrorHandling.cpp.obj: CXX_COMPILER_
 #############################################
 # Link the executable simplified_bank_system.exe
 
-build simplified_bank_system.exe: CXX_EXECUTABLE_LINKER__simplified_bank_system_Debug CMakeFiles/simplified_bank_system.dir/main.cpp.obj CMakeFiles/simplified_bank_system.dir/Account.cpp.obj CMakeFiles/simplified_bank_system.dir/BankingSystem.cpp.obj CMakeFiles/simplified_bank_system.dir/ErrorHandling.cpp.obj
+build simplified_bank_system.exe: CXX_EXECUTABLE_LINKER__simplified_bank_system_Debug CMakeFiles/simplified_bank_system.dir/main/main.cpp.obj CMakeFiles/simplified_bank_system.dir/accounts/Account.cpp.obj CMakeFiles/simplified_bank_system.dir/banking_system/BankingSystem.cpp.obj CMakeFiles/simplified_bank_system.dir/messages/errorMessages/ErrorHandling.cpp.obj CMakeFiles/simplified_bank_system.dir/main/operations/OperationsHandling.cpp.obj CMakeFiles/simplified_bank_system.dir/messages/successfulMessages/SuccessfulMessages.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\simplified_bank_system.dir
