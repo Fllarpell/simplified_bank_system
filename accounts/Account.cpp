@@ -49,7 +49,7 @@ std::string Account::Account::getAccountType() {
 }
 
 float Account::Account::getTransactionFeePercentage() {
-    return 0;
+    return 0.0;
 }
 
 void Account::Account::activate() {

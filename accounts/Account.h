@@ -6,13 +6,13 @@
 
 namespace Account {
 
-    class AccountFunctions;
-    class Account;
-    class StateActivation;
-    class DecoratorAccount;
-    class SavingAccount;
-    class CheckingAccount;
-    class BusinessAccount;
+    class AccountFunctions  ;
+    class Account           ;
+    class StateActivation   ;
+    class DecoratorAccount  ;
+    class SavingAccount     ;
+    class CheckingAccount   ;
+    class BusinessAccount   ;
 
     static std::map<std::string, AccountFunctions*> accountMap;
 
@@ -196,7 +196,7 @@ namespace Account {
         void setCurrent(StateActivation *state) override;
 
     private:
-        float transactionFeePercentage = 0.020;
+        float const transactionFeePercentage = 0.020;
     };
 
 
@@ -229,7 +229,7 @@ namespace Account {
         void setCurrent(StateActivation *state) override;
 
     private:
-        float transactionFeePercentage = 0.025;
+        float const transactionFeePercentage = 0.025;
     };
 }
 
