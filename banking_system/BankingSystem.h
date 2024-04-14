@@ -1,4 +1,5 @@
-#include "include.h"
+#include "../main/include.h"
+#include "../main/operations/OperationsHandling.h"
 
 #ifndef SIMPLIFIED_BANK_SYSTEM_BANKINGSYSTEM_H
 #define SIMPLIFIED_BANK_SYSTEM_BANKINGSYSTEM_H
@@ -21,13 +22,14 @@ namespace BankingSystem {
         static BankingSystem *unique;
         static BankingSystemDestroyer destroyer;
 
-        BankingSystem& operator=( BankingSystem& );
         friend class BankingSystemDestroyer;
     public:
-        BankingSystem() { }
+        BankingSystem() = default;
         BankingSystem( const BankingSystem& );
-        ~BankingSystem() { }
+        BankingSystem& operator=( BankingSystem& );
+        ~BankingSystem() = default;
         static BankingSystem& getInstance();
+        void startHandlingOperations();
 
     };
 }
