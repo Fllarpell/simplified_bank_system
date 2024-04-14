@@ -53,9 +53,13 @@ void OperationsHandling::OperationsHandling::operationsHandling(int amount_opera
         } else if (operation == "Deactivate") {
             std::cin >> accountName;
 
+            Account::accountMap.find(accountName)->second->deactivate();
+
             SuccessfulMessages::SuccessfulMessages::successfulDeactivated(Account::accountMap.find(accountName)->second);
         } else if (operation == "Activate") {
             std::cin >> accountName;
+
+            Account::accountMap.find(accountName)->second->activate();
 
             SuccessfulMessages::SuccessfulMessages::successfulActivated(Account::accountMap.find(accountName)->second);
         }

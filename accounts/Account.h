@@ -8,6 +8,7 @@ namespace Account {
 
     class AccountFunctions;
     class Account;
+    class StateActivation;
     class DecoratorAccount;
     class SavingAccount;
     class CheckingAccount;
@@ -27,10 +28,14 @@ namespace Account {
         virtual std::string getAccountName() = 0;
         virtual std::string getAccountType() = 0;
         virtual float getTransactionFeePercentage() = 0;
+        virtual void activate() = 0;
+        virtual void deactivate() = 0;
+        virtual void setCurrent(StateActivation *state) = 0;
     };
 
 
     class Account : public AccountFunctions {
+        class StateActivation *current;
     public:
         Account(const std::string& accountType, const std::string& accountName, float initialDeposit);
         virtual ~Account() = default;
@@ -53,12 +58,46 @@ namespace Account {
 
         float getTransactionFeePercentage() override;
 
+        void setCurrent(StateActivation *state) override {
+            current = state;
+        }
+
+        void activate() override;
+
+        void deactivate() override;
+
     private:
         std::map<std::string, float> history;
 
         std::string accountName;
         std::string accountType;
         float balance;
+    };
+
+    class StateActivation {
+    public:
+        virtual void activate(AccountFunctions *account);
+
+        virtual void deactivate(AccountFunctions *account);
+
+    };
+
+    class ACTIVATE : public StateActivation {
+    public:
+        ACTIVATE() = default;
+
+        ~ACTIVATE() = default;
+
+        void deactivate(AccountFunctions *account) override;
+    };
+
+    class DEACTIVATE : public StateActivation {
+    public:
+        DEACTIVATE() = default;
+
+        ~DEACTIVATE() = default;
+
+        void activate(AccountFunctions *account) override;
     };
 
 
@@ -86,6 +125,12 @@ namespace Account {
 
         float getTransactionFeePercentage() override;
 
+        void activate() override;
+
+        void deactivate() override;
+
+        void setCurrent(StateActivation *state) override;
+
     };
 
 
@@ -110,6 +155,12 @@ namespace Account {
         std::string getAccountType() override;
 
         float getTransactionFeePercentage() override;
+
+        void activate() override;
+
+        void deactivate() override;
+
+        void setCurrent(StateActivation *state) override;
 
     private:
         float const transactionFeePercentage = 0.015;
@@ -138,6 +189,12 @@ namespace Account {
 
         float getTransactionFeePercentage() override;
 
+        void activate() override;
+
+        void deactivate() override;
+
+        void setCurrent(StateActivation *state) override;
+
     private:
         float transactionFeePercentage = 0.020;
     };
@@ -164,6 +221,12 @@ namespace Account {
         std::string getAccountType() override;
 
         float getTransactionFeePercentage() override;
+
+        void activate() override;
+
+        void deactivate() override;
+
+        void setCurrent(StateActivation *state) override;
 
     private:
         float transactionFeePercentage = 0.025;
