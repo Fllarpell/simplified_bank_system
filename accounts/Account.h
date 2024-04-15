@@ -31,6 +31,7 @@ namespace Account {
         virtual void activate() = 0;
         virtual void deactivate() = 0;
         virtual void setCurrent(StateActivation *state) = 0;
+        virtual StateActivation* getCurrentStateAccount() = 0;
     };
 
 
@@ -62,6 +63,10 @@ namespace Account {
             current = state;
         }
 
+        StateActivation* getCurrentStateAccount() override {
+            return this->current;
+        }
+
         void activate() override;
 
         void deactivate() override;
@@ -80,6 +85,8 @@ namespace Account {
 
         virtual void deactivate(AccountFunctions *account);
 
+        virtual bool getState() = 0;
+
     };
 
     class ACTIVATE : public StateActivation {
@@ -89,6 +96,8 @@ namespace Account {
         ~ACTIVATE() = default;
 
         void deactivate(AccountFunctions *account) override;
+
+        bool getState() override;
     };
 
     class DEACTIVATE : public StateActivation {
@@ -98,6 +107,8 @@ namespace Account {
         ~DEACTIVATE() = default;
 
         void activate(AccountFunctions *account) override;
+
+        bool getState() override;
     };
 
 
@@ -131,6 +142,7 @@ namespace Account {
 
         void setCurrent(StateActivation *state) override;
 
+        StateActivation* getCurrentStateAccount() override;
     };
 
 
@@ -161,6 +173,8 @@ namespace Account {
         void deactivate() override;
 
         void setCurrent(StateActivation *state) override;
+
+        StateActivation* getCurrentStateAccount() override;
 
     private:
         float const transactionFeePercentage = 0.015;
@@ -195,6 +209,8 @@ namespace Account {
 
         void setCurrent(StateActivation *state) override;
 
+        StateActivation* getCurrentStateAccount() override;
+
     private:
         float const transactionFeePercentage = 0.020;
     };
@@ -227,6 +243,8 @@ namespace Account {
         void deactivate() override;
 
         void setCurrent(StateActivation *state) override;
+
+        StateActivation* getCurrentStateAccount() override;
 
     private:
         float const transactionFeePercentage = 0.025;

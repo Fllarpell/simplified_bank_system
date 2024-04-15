@@ -9,6 +9,7 @@
 #include <cmath>
 #include <iomanip>
 
+#include <cstdio>
 #include <stdio.h>
 #include <stdbool.h>
 

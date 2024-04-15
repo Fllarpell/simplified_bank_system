@@ -13,15 +13,9 @@ Account::Account::Account(const std::string &accountType, const std::string &acc
     this->current = new ACTIVATE();
 }
 
-void Account::Account::withdraw(float withdrawalAmount) {
-    if (withdrawalAmount > this->balance)
-        ErrorHandling::ErrorHandling::InsufficientFundsForTransferAndWithdrawError(this->accountName);
-}
+void Account::Account::withdraw(float withdrawalAmount) {}
 
-void Account::Account::transfer(Account::AccountFunctions *toAccount, float transferAmount) {
-    if (transferAmount > this->balance)
-        ErrorHandling::ErrorHandling::InsufficientFundsForTransferAndWithdrawError(this->accountName);
-}
+void Account::Account::transfer(Account::AccountFunctions *toAccount, float transferAmount) {}
 
 void Account::Account::deposit(float depositAmount) {
     this->balance += depositAmount;
@@ -113,6 +107,10 @@ void Account::DecoratorAccount::setCurrent(StateActivation *state) {
     return acc->setCurrent(state);
 }
 
+Account::StateActivation *Account::DecoratorAccount::getCurrentStateAccount() {
+    return acc->getCurrentStateAccount();
+}
+
 
 void Account::SavingAccount::withdraw(float withdrawalAmount) {
     DecoratorAccount::withdraw(withdrawalAmount);
@@ -168,6 +166,10 @@ void Account::SavingAccount::deactivate() {
 
 void Account::SavingAccount::setCurrent(StateActivation *state) {
     DecoratorAccount::setCurrent(state);
+}
+
+Account::StateActivation *Account::SavingAccount::getCurrentStateAccount() {
+    return DecoratorAccount::getCurrentStateAccount();
 }
 
 
@@ -226,6 +228,10 @@ void Account::CheckingAccount::setCurrent(StateActivation *state) {
     DecoratorAccount::setCurrent(state);
 }
 
+Account::StateActivation *Account::CheckingAccount::getCurrentStateAccount() {
+    return DecoratorAccount::getCurrentStateAccount();
+}
+
 
 void Account::BusinessAccount::withdraw(float withdrawalAmount) {
     DecoratorAccount::withdraw(withdrawalAmount);
@@ -282,6 +288,10 @@ void Account::BusinessAccount::setCurrent(StateActivation *state) {
     DecoratorAccount::setCurrent(state);
 }
 
+Account::StateActivation *Account::BusinessAccount::getCurrentStateAccount() {
+    return DecoratorAccount::getCurrentStateAccount();
+}
+
 
 void Account::StateActivation::activate(Account::AccountFunctions *account) {
     ErrorHandling::ErrorHandling::ActivateAnActivatedAccountError(account->getAccountName());
@@ -297,8 +307,16 @@ void Account::ACTIVATE::deactivate(AccountFunctions *account) {
     delete this;
 }
 
+bool Account::ACTIVATE::getState() {
+    return true;
+}
+
 
 void Account::DEACTIVATE::activate(AccountFunctions *account) {
     account->setCurrent(new ACTIVATE());
     delete this;
+}
+
+bool Account::DEACTIVATE::getState() {
+    return false;
 }
