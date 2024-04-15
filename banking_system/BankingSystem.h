@@ -7,7 +7,7 @@
 namespace BankingSystem {
 
     class BankingSystem;
-
+    // destroyer of BankingSystem
     class BankingSystemDestroyer
     {
     private:
@@ -28,8 +28,8 @@ namespace BankingSystem {
         BankingSystem( const BankingSystem& );
         BankingSystem& operator=( BankingSystem& );
         ~BankingSystem() = default;
-        static BankingSystem& getInstance();
-        void startHandlingOperations();
+        static BankingSystem& getInstance(); // check of existing instance, otherwise create it
+        void startHandlingOperations(); // start processing flow of operations
 
     };
 }

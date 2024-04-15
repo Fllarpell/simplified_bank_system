@@ -13,10 +13,10 @@ namespace Account {
     class SavingAccount     ;
     class CheckingAccount   ;
     class BusinessAccount   ;
-
+    // map for storing of the existing accounts
     static std::map<std::string, AccountFunctions*> accountMap;
 
-
+    // class with all operations for the accounts
     class AccountFunctions {
     public:
         virtual void withdraw(float withdrawalAmount) = 0;
@@ -34,7 +34,7 @@ namespace Account {
         virtual StateActivation* getCurrentStateAccount() = 0;
     };
 
-
+    // base class account (default in Decorator)
     class Account : public AccountFunctions {
         class StateActivation *current;
     public:
@@ -78,7 +78,7 @@ namespace Account {
         std::string accountType;
         float balance;
     };
-
+    // class for switch states
     class StateActivation {
     public:
         virtual void activate(AccountFunctions *account);
@@ -88,7 +88,7 @@ namespace Account {
         virtual bool getState() = 0;
 
     };
-
+    // class ACTIVE account state
     class ACTIVATE : public StateActivation {
     public:
         ACTIVATE() = default;
@@ -99,7 +99,7 @@ namespace Account {
 
         bool getState() override;
     };
-
+    // class INACTIVE account state
     class DEACTIVATE : public StateActivation {
     public:
         DEACTIVATE() = default;
@@ -111,7 +111,7 @@ namespace Account {
         bool getState() override;
     };
 
-
+    // linking class in decorator design pattern
     class DecoratorAccount : public AccountFunctions {
     public:
         AccountFunctions *acc;
@@ -145,7 +145,7 @@ namespace Account {
         StateActivation* getCurrentStateAccount() override;
     };
 
-
+    // class for instantiation of savings account
     class SavingAccount : public DecoratorAccount {
     public:
         explicit SavingAccount(Account* account) : DecoratorAccount(account) {}
@@ -177,10 +177,10 @@ namespace Account {
         StateActivation* getCurrentStateAccount() override;
 
     private:
-        float const transactionFeePercentage = 0.015;
+        float const transactionFeePercentage = 0.015;   // transaction fee percentage for savings account
     };
 
-
+    // class for instantiation of checking account
     class CheckingAccount : public DecoratorAccount {
     public:
         explicit CheckingAccount(Account* account) : DecoratorAccount(account) {}
@@ -212,10 +212,10 @@ namespace Account {
         StateActivation* getCurrentStateAccount() override;
 
     private:
-        float const transactionFeePercentage = 0.020;
+        float const transactionFeePercentage = 0.020;   // transaction fee percentage for checking account
     };
 
-
+    // class for instantiation of business account
     class BusinessAccount : public DecoratorAccount {
     public:
         explicit BusinessAccount(Account* account) : DecoratorAccount(account) {}
@@ -247,7 +247,7 @@ namespace Account {
         StateActivation* getCurrentStateAccount() override;
 
     private:
-        float const transactionFeePercentage = 0.025;
+        float const transactionFeePercentage = 0.025;   // transaction fee percentage for business account
     };
 }
 
