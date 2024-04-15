@@ -117,6 +117,10 @@ bool OperationsHandling::OperationsHandling::checkoutErrorExistAccount(const std
 }
 
 bool OperationsHandling::OperationsHandling::checkoutErrorAccountActivity(const std::string &accountName) {
+    if (!Account::accountMap.find(accountName)->second->getCurrentStateAccount()->getState()) {
+        ErrorHandling::ErrorHandling::WithdrawalFromAnInactiveAccountError(accountName);
+        return true;
+    }
     return false;
 }
 
