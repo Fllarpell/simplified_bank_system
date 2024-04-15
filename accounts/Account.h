@@ -24,7 +24,7 @@ namespace Account {
         virtual void deposit(float depositAmount) = 0;
         virtual float getBalance() = 0;
         virtual void setBalance(float newBalance) = 0;
-        virtual std::map<std::string, float> getHistory() = 0;
+        virtual std::vector<std::string> getHistory() = 0;
         virtual std::string getAccountName() = 0;
         virtual std::string getAccountType() = 0;
         virtual float getTransactionFeePercentage() = 0;
@@ -51,7 +51,7 @@ namespace Account {
 
         void setBalance(float newBalance) override;
 
-        std::map<std::string, float> getHistory() override;
+        std::vector<std::string> getHistory() override;
 
         std::string getAccountName() override;
 
@@ -72,7 +72,7 @@ namespace Account {
         void deactivate() override;
 
     private:
-        std::map<std::string, float> history;
+        std::vector<std::string> history;
 
         std::string accountName;
         std::string accountType;
@@ -128,7 +128,7 @@ namespace Account {
 
         void setBalance(float newBalance) override;
 
-        std::map<std::string, float> getHistory() override;
+        std::vector<std::string> getHistory() override;
 
         std::string getAccountName() override;
 
@@ -160,7 +160,7 @@ namespace Account {
 
         void setBalance(float newBalance) override;
 
-        std::map<std::string, float> getHistory() override;
+        std::vector<std::string> getHistory() override;
 
         std::string getAccountName() override;
 
@@ -195,7 +195,7 @@ namespace Account {
 
         void setBalance(float newBalance) override;
 
-        std::map<std::string, float> getHistory() override;
+        std::vector<std::string> getHistory() override;
 
         std::string getAccountName() override;
 
@@ -230,7 +230,7 @@ namespace Account {
 
         void setBalance(float newBalance) override;
 
-        std::map<std::string, float> getHistory() override;
+        std::vector<std::string> getHistory() override;
 
         std::string getAccountName() override;
 

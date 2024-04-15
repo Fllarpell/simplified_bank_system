@@ -34,8 +34,7 @@ void OperationsHandling::OperationsHandling::operationsHandling(int amount_opera
             std::cin >> accountName     ;       // input name of the account
             std::cin >> depositAmount   ;       // input amount money for deposit
 
-            if (checkoutErrorExistAccount(accountName)
-            || checkoutErrorAccountActivity(accountName)) {
+            if (checkoutErrorExistAccount(accountName)) {
                 continue;
             }
             Account::accountMap.find(accountName)->second->deposit(depositAmount);  // function of deposit money on the account
@@ -62,7 +61,6 @@ void OperationsHandling::OperationsHandling::operationsHandling(int amount_opera
             if (checkoutErrorExistAccount(fromAccountName)      // check existing of the sender account
             || checkoutErrorExistAccount(toAccountName)         // check existing of the recipient account
             || checkoutErrorAccountActivity(fromAccountName)    // check activity of the sender account
-            || checkoutErrorAccountActivity(toAccountName)      // check activity of the recipient account
             || checkoutErrorInsufficientFunds(fromAccountName, transferAmount)) {   // check sufficient funds or not
                 continue;
             }
@@ -71,7 +69,7 @@ void OperationsHandling::OperationsHandling::operationsHandling(int amount_opera
 
             SuccessfulMessages::SuccessfulMessages::successfulTransfer(Account::accountMap.find(fromAccountName)->second,
                                                                        Account::accountMap.find(toAccountName)->second, transferAmount,
-                                                                       Account::accountMap.find(toAccountName)->second->getTransactionFeePercentage()); // message about successful transfer money from account to another account
+                                                                       Account::accountMap.find(fromAccountName)->second->getTransactionFeePercentage()); // message about successful transfer money from account to another account
         } else if (operation == "View") {       // Processing View operation
             std::cin >> accountName     ;       // input name of the account
 

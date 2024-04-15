@@ -5,21 +5,30 @@ Account::Account::Account(const std::string &accountType, const std::string &acc
     this->accountName               = accountName       ;   // name of account
     this->balance                   = initialDeposit    ;   // default amount money on the account
 
-    this->history["InitialDeposit"] = initialDeposit    ;   // default amount initial deposit on the account write in the history
-    this->history["Deposit"]        = 0.0               ;   // default amount Deposit on the account write in the history
-    this->history["Withdrawal"]     = 0.0               ;   // default amount Withdrawal on the account write in the history
-    this->history["Transfer"]       = 0.0               ;   // default amount Transfer on the account write in the history
+    char out[256];
+    sprintf(out, "Initial Deposit $%.3f", initialDeposit);
+    this->history.push_back(out);
 
     this->current = new ACTIVATE();                         // default state of the activity of the user
 }
 // default function withdraw of the account
-void Account::Account::withdraw(float withdrawalAmount) { this->history.find("Withdrawal")->second += withdrawalAmount; }
+void Account::Account::withdraw(float withdrawalAmount) {
+    char out[256];
+    sprintf(out, "Withdrawal $%.3f", withdrawalAmount);
+    this->history.push_back(out);
+}
 // default function transfer of the account
-void Account::Account::transfer(Account::AccountFunctions *toAccount, float transferAmount) { this->history.find("Transfer")->second += transferAmount; }
+void Account::Account::transfer(Account::AccountFunctions *toAccount, float transferAmount) {
+    char out[256];
+    sprintf(out, "Transfer $%.3f", transferAmount);
+    this->history.push_back(out);
+}
 // default function deposit of the account
 void Account::Account::deposit(float depositAmount) {
     this->balance += depositAmount;
-    this->history.find("Deposit")->second += depositAmount;
+    char out[256];
+    sprintf(out, "Deposit $%.3f", depositAmount);
+    this->history.push_back(out);
 }
 // default getter of balance of the account
 float Account::Account::getBalance() {
@@ -30,7 +39,7 @@ void Account::Account::setBalance(float newBalance) {
     this->balance = newBalance;
 }
 // default getter of history of the account
-std::map<std::string, float> Account::Account::getHistory() {
+std::vector<std::string> Account::Account::getHistory() {
     return this->history;
 }
 // default getter of name of the account
@@ -79,7 +88,7 @@ void Account::DecoratorAccount::setBalance(float newBalance) {
     acc->setBalance(newBalance);
 }
 // calling default function getHistory
-std::map<std::string, float> Account::DecoratorAccount::getHistory() {
+std::vector<std::string> Account::DecoratorAccount::getHistory() {
     return acc->getHistory();
 }
 // calling default function getAccountName
@@ -138,7 +147,7 @@ void Account::SavingAccount::setBalance(float newBalance) {
     DecoratorAccount::setBalance(newBalance);
 }
 // calling default function getHistory + additional functional of the SavingAccount account's type
-std::map<std::string, float> Account::SavingAccount::getHistory() {
+std::vector<std::string> Account::SavingAccount::getHistory() {
     return DecoratorAccount::getHistory();
 }
 // calling default function getAccountName + additional functional of the SavingAccount account's type
@@ -196,7 +205,7 @@ void Account::CheckingAccount::setBalance(float newBalance) {
     DecoratorAccount::setBalance(newBalance);
 }
 // calling default function getHistory + additional functional of the CheckingAccount account's type
-std::map<std::string, float> Account::CheckingAccount::getHistory() {
+std::vector<std::string> Account::CheckingAccount::getHistory() {
     return DecoratorAccount::getHistory();
 }
 // calling default function getAccountName + additional functional of the CheckingAccount account's type
@@ -254,7 +263,7 @@ void Account::BusinessAccount::setBalance(float newBalance) {
     DecoratorAccount::setBalance(newBalance);
 }
 // calling default function getHistory + additional functional of the BusinessAccount account's type
-std::map<std::string, float> Account::BusinessAccount::getHistory() {
+std::vector<std::string> Account::BusinessAccount::getHistory() {
     return DecoratorAccount::getHistory();
 }
 // calling default function getAccountName + additional functional of the BusinessAccount account's type
