@@ -100,6 +100,9 @@ void SuccessfulMessages::SuccessfulMessages::successfulView(Account::AccountFunc
            balance,
            state.c_str(),
            transactions);
+
+    strcpy(temp_string, "");
+    strcpy(transactions, "");
 }
 // message about successful activation of the account
 void SuccessfulMessages::SuccessfulMessages::successfulActivated(Account::AccountFunctions* account) {
