@@ -79,16 +79,31 @@ void OperationsHandling::OperationsHandling::operationsHandling(int amount_opera
             SuccessfulMessages::SuccessfulMessages::successfulView(Account::accountMap.find(accountName)->second);
         } else if (operation == "Deactivate") {
             std::cin >> accountName     ;
+            bool notErrorFlag = true    ;
+            if (checkoutErrorExistAccount(accountName)) {
+                continue;
+            }
+            if (!Account::accountMap.find(accountName)->second->getCurrentStateAccount()->getState()) {
+                notErrorFlag = false;
+            }
 
             Account::accountMap.find(accountName)->second->deactivate();
 
-            SuccessfulMessages::SuccessfulMessages::successfulDeactivated(Account::accountMap.find(accountName)->second);
+            if (notErrorFlag)
+                SuccessfulMessages::SuccessfulMessages::successfulDeactivated(Account::accountMap.find(accountName)->second);
         } else if (operation == "Activate") {
             std::cin >> accountName     ;
-
+            bool notErrorFlag = true    ;
+            if (checkoutErrorExistAccount(accountName)) {
+                continue;
+            }
+            if (Account::accountMap.find(accountName)->second->getCurrentStateAccount()->getState()) {
+                notErrorFlag = false;
+            }
             Account::accountMap.find(accountName)->second->activate();
 
-            SuccessfulMessages::SuccessfulMessages::successfulActivated(Account::accountMap.find(accountName)->second);
+            if (notErrorFlag)
+                SuccessfulMessages::SuccessfulMessages::successfulActivated(Account::accountMap.find(accountName)->second);
         }
     }
 }
