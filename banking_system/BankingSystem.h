@@ -17,6 +17,7 @@ namespace BankingSystem {
         void initialize( BankingSystem* p );
     };
 
+    // banking system singleton
     class BankingSystem {
     private:
         static BankingSystem *unique;

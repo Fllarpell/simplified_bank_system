@@ -5,7 +5,7 @@
 #define SIMPLIFIED_BANK_SYSTEM_ACCOUNT_H
 
 namespace Account {
-
+    // declaration prototype classes
     class AccountFunctions  ;
     class Account           ;
     class StateActivation   ;

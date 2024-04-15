@@ -13,6 +13,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <bits/stdc++.h>
 
 #ifndef SIMPLIFIED_BANK_SYSTEM_INCLUDE_H
 #define SIMPLIFIED_BANK_SYSTEM_INCLUDE_H

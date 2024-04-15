@@ -13,9 +13,9 @@ Account::Account::Account(const std::string &accountType, const std::string &acc
     this->current = new ACTIVATE();                         // default state of the activity of the user
 }
 // default function withdraw of the account
-void Account::Account::withdraw(float withdrawalAmount) {}
+void Account::Account::withdraw(float withdrawalAmount) { this->history.find("Withdrawal")->second += withdrawalAmount; }
 // default function transfer of the account
-void Account::Account::transfer(Account::AccountFunctions *toAccount, float transferAmount) {}
+void Account::Account::transfer(Account::AccountFunctions *toAccount, float transferAmount) { this->history.find("Transfer")->second += transferAmount; }
 // default function deposit of the account
 void Account::Account::deposit(float depositAmount) {
     this->balance += depositAmount;
@@ -116,7 +116,6 @@ void Account::SavingAccount::withdraw(float withdrawalAmount) {
     DecoratorAccount::withdraw(withdrawalAmount);
 
     this->setBalance(this->getBalance() - withdrawalAmount);
-    this->getHistory().find("Withdrawal")->second += withdrawalAmount;
 }
 // calling default function transfer + additional functional of the SavingAccount account's type
 void Account::SavingAccount::transfer(Account::AccountFunctions *toAccount, float transferAmount) {
@@ -125,7 +124,6 @@ void Account::SavingAccount::transfer(Account::AccountFunctions *toAccount, floa
     this->setBalance(this->getBalance() - transferAmount);
 
     toAccount->setBalance(toAccount->getBalance() + transferAmount - transferAmount * this->transactionFeePercentage);
-    this->getHistory().find("Transfer")->second += transferAmount;
 }
 // calling default function deposit + additional functional of the SavingAccount account's type
 void Account::SavingAccount::deposit(float depositAmount) {
@@ -177,7 +175,6 @@ void Account::CheckingAccount::withdraw(float withdrawalAmount) {
     DecoratorAccount::withdraw(withdrawalAmount);
 
     this->setBalance(this->getBalance() - withdrawalAmount);
-    this->getHistory().find("Withdrawal")->second += withdrawalAmount;
 }
 // calling default function transfer + additional functional of the CheckingAccount account's type
 void Account::CheckingAccount::transfer(AccountFunctions *toAccount, float transferAmount) {
@@ -185,7 +182,6 @@ void Account::CheckingAccount::transfer(AccountFunctions *toAccount, float trans
 
     this->setBalance(this->getBalance()-transferAmount);
     toAccount->setBalance(toAccount->getBalance() + transferAmount - transferAmount * this->transactionFeePercentage);
-    this->getHistory().find("Transfer")->second += transferAmount;
 }
 // calling default function deposit + additional functional of the CheckingAccount account's type
 void Account::CheckingAccount::deposit(float depositAmount) {
@@ -237,7 +233,6 @@ void Account::BusinessAccount::withdraw(float withdrawalAmount) {
     DecoratorAccount::withdraw(withdrawalAmount);
 
     this->setBalance(this->getBalance() - withdrawalAmount);
-    this->getHistory().find("Withdrawal")->second += withdrawalAmount;
 }
 // calling default function transfer + additional functional of the BusinessAccount account's type
 void Account::BusinessAccount::transfer(Account::AccountFunctions *toAccount, float transferAmount) {
@@ -245,7 +240,6 @@ void Account::BusinessAccount::transfer(Account::AccountFunctions *toAccount, fl
 
     this->setBalance(this->getBalance()-transferAmount);
     toAccount->setBalance(toAccount->getBalance() + transferAmount - transferAmount * this->transactionFeePercentage);
-    this->getHistory().find("Transfer")->second += transferAmount;
 }
 // calling default function deposit + additional functional of the BusinessAccount account's type
 void Account::BusinessAccount::deposit(float depositAmount) {

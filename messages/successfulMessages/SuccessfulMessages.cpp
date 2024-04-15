@@ -5,7 +5,7 @@ void SuccessfulMessages::SuccessfulMessages::successfulCreated(Account::AccountF
     std::string accountName = account->getAccountName();    // name of the account
     float balance = account->getBalance();                  // balance of the account
     // output about successful creating account
-    printf("A new %s created for %s with an initial balance of $%.2f.\n",
+    printf("A new %s account created for %s with an initial balance of $%.2f.\n",
            accountType.c_str(),
            accountName.c_str(),
            balance);
@@ -15,7 +15,7 @@ void SuccessfulMessages::SuccessfulMessages::successfulWithdrew(Account::Account
     std::string accountName = account->getAccountName();    // name of the account
     float balance = account->getBalance();                  // balance of the account
     // output about successful withdraw money from the account
-    printf("%s successfully withdrew %.2f. New Balance: $%.2f. Transaction Fee: $%.2f (%.1f%) in the system.\n",
+    printf("%s successfully withdrew $%.2f. New Balance: $%.2f. Transaction Fee: $%.2f (%.1f%) in the system.\n",
            accountName.c_str(),
            withdrawalAmount - withdrawalAmount*transactionFeePercentage,
            balance,
@@ -54,34 +54,47 @@ void SuccessfulMessages::SuccessfulMessages::successfulView(Account::AccountFunc
     auto balance = account->getBalance();       // balance of the account
     std::string state = "Active";                    // default state of activity of the account
     char transactions[256];                         // string for recording all transactions from history
+    char temp_string[256];
 
     if (!account->getCurrentStateAccount()->getState()) // check real state of the account
         state = "Inactive";
     // filling transactions string
-    if (account->getHistory().find("InitialDeposit")->second != 0)
-        sprintf(transactions, "Initial Deposit $%.2f", account->getHistory().find("InitialDeposit")->second);
+    if (account->getHistory().find("InitialDeposit")->second != 0) {
+        sprintf(temp_string, "Initial Deposit $%.3f", account->getHistory().find("InitialDeposit")->second);
 
-    if (account->getHistory().find("Deposit")->second != 0)
-        transactions[0] == '\0' ?
-        sprintf(transactions, ", Deposit $%.2f", account->getHistory().find("Deposit")->second)
-                                : sprintf(transactions, "Deposit $%.2f",
+        std::strcat(transactions, temp_string);
+    }
+
+    if (account->getHistory().find("Deposit")->second != 0) {
+        transactions[0] != '\0' ?
+        sprintf(temp_string, ", Deposit $%.3f", account->getHistory().find("Deposit")->second)
+                                : sprintf(temp_string, "Deposit $%.3f",
                                           account->getHistory().find("Deposit")->second);
 
-    if (account->getHistory().find("Withdrawal")->second != 0)
-        transactions[0] == '\0' ?
-        sprintf(transactions, ", Withdrawal $%.2f",
+        std::strcat(transactions, temp_string);
+    }
+
+    if (account->getHistory().find("Withdrawal")->second != 0) {
+        transactions[0] != '\0' ?
+        sprintf(temp_string, ", Withdrawal $%.3f",
                 account->getHistory().find("Withdrawal")->second)
-                                : sprintf(transactions, "Withdrawal $%.2f",
+                                : sprintf(temp_string, "Withdrawal $%.3f",
                                           account->getHistory().find("Withdrawal")->second);
 
-    if (account->getHistory().find("Transfer")->second != 0)
-        transactions[0] == '\0' ?
-        sprintf(transactions, ", Transfer $%.2f", account->getHistory().find("Transfer")->second)
-                                : sprintf(transactions, "Transfer $%.2f",
+        std::strcat(transactions, temp_string);
+    }
+
+    if (account->getHistory().find("Transfer")->second != 0) {
+        transactions[0] != '\0' ?
+        sprintf(temp_string, ", Transfer $%.3f", account->getHistory().find("Transfer")->second)
+                                : sprintf(temp_string, "Transfer $%.3f",
                                           account->getHistory().find("Transfer")->second);
 
+        std::strcat(transactions, temp_string);
+    }
+
     // output all information about the user
-    printf("%s's Account: Type: %s, Balance: $%.2f, State: %s, Transactions: [%s].\n",
+    printf("%s's Account: Type: %s, Balance: $%.3f, State: %s, Transactions: [%s].\n",
            name.c_str(),
            type.c_str(),
            balance,
