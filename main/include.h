@@ -1,15 +1,16 @@
 #pragma once
 
+#include "math.h"
+
+#include <cstdio>
 #include <iostream>
 #include <string>
 #include <vector>
 #include <map>
 #include <algorithm>
 #include <memory>
-#include <cmath>
 #include <iomanip>
 
-#include <cstdio>
 #include <stdio.h>
 #include <stdbool.h>
 

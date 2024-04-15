@@ -15,7 +15,7 @@ void SuccessfulMessages::SuccessfulMessages::successfulWithdrew(Account::Account
     std::string accountName = account->getAccountName();
     float balance = account->getBalance();
 
-    printf("%s successfully withdrew %.2f. New Balance: $%.2f. Transaction Fee: $%.2f (%.2f%) in the system.\n",
+    printf("%s successfully withdrew %.2f. New Balance: $%.2f. Transaction Fee: $%.2f (%.1f%) in the system.\n",
            accountName.c_str(),
            withdrawalAmount - withdrawalAmount*transactionFeePercentage,
            balance,
@@ -28,7 +28,7 @@ void SuccessfulMessages::SuccessfulMessages::successfulTransfer(Account::Account
     std::string toAccountName = accountTo->getAccountName();
     float targetBalance = accountTo->getBalance();
 
-    printf("%s successfully transferred %.2f to %s. New Balance: $%.2f. Transaction Fee: $%.2f (%.2f%) in the system.\n",
+    printf("%s successfully transferred %.2f to %s. New Balance: $%.2f. Transaction Fee: $%.2f (%.1f%) in the system.\n",
            fromAccountName.c_str(),
            transferAmount-transferAmount*transactionFeePercentage,
            toAccountName.c_str(),
@@ -52,35 +52,41 @@ void SuccessfulMessages::SuccessfulMessages::successfulView(Account::AccountFunc
     auto name = account->getAccountName();
     auto type = account->getAccountType();
     auto balance = account->getBalance();
-    std::string state = "Deactivate";
-    std::string transactions;
+    std::string state = "Inactive";
+    char transactions[256];
 
-    if (account->getCurrentStateAccount()->getState()) {
-        state = "Activate";
-    };
+    if (account->getCurrentStateAccount()->getState())
+        state = "Active";
 
-    if (account->getHistory().find("InitialDeposit")->second != 0) {
-        transactions += "Initial deposit $" + std::to_string(account->getHistory().find("InitialDeposit")->second);
-    }
-    if (account->getHistory().find("Deposit")->second != 0) {
-        transactions += (!transactions.empty() ? ", Deposit $" : "Deposit $") +
-                        std::to_string(account->getHistory().find("Deposit")->second);
-    }
-    if (account->getHistory().find("Withdrawal")->second != 0) {
-        transactions += (!transactions.empty() ? ", Withdrawal $" : "Withdrawal $") +
-                        std::to_string(account->getHistory().find("Withdrawal")->second);
-    }
-    if (account->getHistory().find("Transfer")->second != 0) {
-        transactions += (!transactions.empty() ? ", Transfer $" : "Transfer $") +
-                        std::to_string(account->getHistory().find("Transfer")->second);
-    }
+    if (account->getHistory().find("InitialDeposit")->second != 0)
+        sprintf(transactions, "Initial Deposit $%.2f", account->getHistory().find("InitialDeposit")->second);
+
+    if (account->getHistory().find("Deposit")->second != 0)
+        transactions[0] == '\0' ?
+        sprintf(transactions, ", Deposit $%.2f", account->getHistory().find("Deposit")->second)
+                                : sprintf(transactions, "Deposit $%.2f",
+                                          account->getHistory().find("Deposit")->second);
+
+    if (account->getHistory().find("Withdrawal")->second != 0)
+        transactions[0] == '\0' ?
+        sprintf(transactions, ", Withdrawal $%.2f",
+                account->getHistory().find("Withdrawal")->second)
+                                : sprintf(transactions, "Withdrawal $%.2f",
+                                          account->getHistory().find("Withdrawal")->second);
+
+    if (account->getHistory().find("Transfer")->second != 0)
+        transactions[0] == '\0' ?
+        sprintf(transactions, ", Transfer $%.2f", account->getHistory().find("Transfer")->second)
+                                : sprintf(transactions, "Transfer $%.2f",
+                                          account->getHistory().find("Transfer")->second);
+
 
     printf("%s's Account: Type: %s, Balance: $%.2f, State: %s, Transactions: [%s].\n",
            name.c_str(),
            type.c_str(),
            balance,
            state.c_str(),
-           transactions.c_str());
+           transactions);
 }
 
 void SuccessfulMessages::SuccessfulMessages::successfulActivated(Account::AccountFunctions* account) {
