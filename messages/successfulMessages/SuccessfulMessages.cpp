@@ -5,7 +5,7 @@ void SuccessfulMessages::SuccessfulMessages::successfulCreated(Account::AccountF
     std::string accountName = account->getAccountName();    // name of the account
     float balance = account->getBalance();                  // balance of the account
     // output about successful creating account
-    printf("A new %s created for %s with an initial balance of $%.2f.\n",
+    printf("A new %s account created for %s with an initial balance of $%.3f.\n",
            accountType.c_str(),
            accountName.c_str(),
            balance);
@@ -15,7 +15,7 @@ void SuccessfulMessages::SuccessfulMessages::successfulWithdrew(Account::Account
     std::string accountName = account->getAccountName();    // name of the account
     float balance = account->getBalance();                  // balance of the account
     // output about successful withdraw money from the account
-    printf("%s successfully withdrew %.2f. New Balance: $%.2f. Transaction Fee: $%.2f (%.1f%) in the system.\n",
+    printf("%s successfully withdrew $%.3f. New Balance: $%.3f. Transaction Fee: $%.3f (%.1f%) in the system.\n",
            accountName.c_str(),
            withdrawalAmount - withdrawalAmount*transactionFeePercentage,
            balance,
@@ -26,9 +26,9 @@ void SuccessfulMessages::SuccessfulMessages::successfulWithdrew(Account::Account
 void SuccessfulMessages::SuccessfulMessages::successfulTransfer(Account::AccountFunctions* accountFrom, Account::AccountFunctions* accountTo, float transferAmount, float transactionFeePercentage) {
     std::string fromAccountName = accountFrom->getAccountName();    // name account for transfer operation (from where transfer money)
     std::string toAccountName = accountTo->getAccountName();        // name account for transfer operation (to where transfer money)
-    float targetBalance = accountTo->getBalance();                  // balance of the account
+    float targetBalance = accountFrom->getBalance();                  // balance of the account
     //output about successful transfer money from the account to another account
-    printf("%s successfully transferred %.2f to %s. New Balance: $%.2f. Transaction Fee: $%.2f (%.1f%) in the system.\n",
+    printf("%s successfully transferred $%.3f to %s. New Balance: $%.3f. Transaction Fee: $%.3f (%.1f%) in the system.\n",
            fromAccountName.c_str(),
            transferAmount-transferAmount*transactionFeePercentage,
            toAccountName.c_str(),
@@ -42,7 +42,7 @@ void SuccessfulMessages::SuccessfulMessages::successfulDeposit(Account::AccountF
     std::string accountName = account->getAccountName();    // name of the account
     float balance = account->getBalance();                  // balance of the account
     //output about successful deposit money to the account
-    printf("%s successfully deposited $%.2f. New Balance: $%.2f.\n",
+    printf("%s successfully deposited $%.3f. New Balance: $%.3f.\n",
            accountName.c_str(),
            depositAmount,
            balance);
@@ -53,40 +53,27 @@ void SuccessfulMessages::SuccessfulMessages::successfulView(Account::AccountFunc
     auto type = account->getAccountType();      // type of the account
     auto balance = account->getBalance();       // balance of the account
     std::string state = "Active";                    // default state of activity of the account
-    char transactions[256];                         // string for recording all transactions from history
+    std::string transactions;
+    std::vector<std::string> history = account->getHistory();
+
+    for (int i = 0; i < history.size(); ++i) {
+        if (i == history.size() - 1) {
+            transactions += history[i];
+            break;
+        }
+        transactions += history[i] + ", ";
+    }
 
     if (!account->getCurrentStateAccount()->getState()) // check real state of the account
         state = "Inactive";
-    // filling transactions string
-    if (account->getHistory().find("InitialDeposit")->second != 0)
-        sprintf(transactions, "Initial Deposit $%.2f", account->getHistory().find("InitialDeposit")->second);
-
-    if (account->getHistory().find("Deposit")->second != 0)
-        transactions[0] == '\0' ?
-        sprintf(transactions, ", Deposit $%.2f", account->getHistory().find("Deposit")->second)
-                                : sprintf(transactions, "Deposit $%.2f",
-                                          account->getHistory().find("Deposit")->second);
-
-    if (account->getHistory().find("Withdrawal")->second != 0)
-        transactions[0] == '\0' ?
-        sprintf(transactions, ", Withdrawal $%.2f",
-                account->getHistory().find("Withdrawal")->second)
-                                : sprintf(transactions, "Withdrawal $%.2f",
-                                          account->getHistory().find("Withdrawal")->second);
-
-    if (account->getHistory().find("Transfer")->second != 0)
-        transactions[0] == '\0' ?
-        sprintf(transactions, ", Transfer $%.2f", account->getHistory().find("Transfer")->second)
-                                : sprintf(transactions, "Transfer $%.2f",
-                                          account->getHistory().find("Transfer")->second);
 
     // output all information about the user
-    printf("%s's Account: Type: %s, Balance: $%.2f, State: %s, Transactions: [%s].\n",
+    printf("%s's Account: Type: %s, Balance: $%.3f, State: %s, Transactions: [%s].\n",
            name.c_str(),
            type.c_str(),
            balance,
            state.c_str(),
-           transactions);
+           transactions.c_str());
 }
 // message about successful activation of the account
 void SuccessfulMessages::SuccessfulMessages::successfulActivated(Account::AccountFunctions* account) {
